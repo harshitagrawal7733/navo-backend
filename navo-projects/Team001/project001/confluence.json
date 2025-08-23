@@ -1,0 +1,38 @@
+[
+  {
+    "id": "CONF-001",
+    "title": "Docker Port Binding Issue",
+    "content": "When deploying containers, port collisions can occur if multiple services use the same port. Recommended to use dynamic port allocation in Docker Compose.",
+    "author": "Alice",
+    "team": "Platform Dev",
+    "created_at": "2024-08-10T10:15:00Z",
+    "tags": ["docker", "deployment", "port"]
+  },
+  {
+    "id": "CONF-002",
+    "title": "Kubernetes Pod Restart Policy",
+    "content": "Configure the pod restartPolicy as Always or OnFailure depending on workload. This avoids unexpected pod termination issues.",
+    "author": "Bob",
+    "team": "Cloud Ops",
+    "created_at": "2024-07-21T09:00:00Z",
+    "tags": ["kubernetes", "pod", "restart"]
+  },
+  {
+    "id": "CONF-003",
+    "title": "API Rate Limiting Best Practices",
+    "content": "Use token buckets or leaky bucket algorithms to avoid throttling issues and maintain SLA compliance.",
+    "author": "Charlie",
+    "team": "Backend Dev",
+    "created_at": "2024-06-30T14:30:00Z",
+    "tags": ["api", "rate-limit", "sla"]
+  },
+  {
+    "id": "CONF-004",
+    "title": "Database Connection Pooling",
+    "content": "Set max connections based on expected load. Avoid exhausting database connections which may cause service downtime.",
+    "author": "Diana",
+    "team": "DB Admin",
+    "created_at": "2024-08-01T11:45:00Z",
+    "tags": ["database", "pooling", "performance"]
+  }
+]
