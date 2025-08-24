@@ -2,12 +2,15 @@
 
 import json
 import os
+import logging
 
 def fetch_confluence_pages(query: str):
+    print(f"🔍 fetch_confluence_pages called with query: '{query}'")
     """Mock tool: fetch Confluence pages from a local JSON file."""
-    json_path = r"C:\Users\HAG047\OneDrive - Maersk Group\Documents\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\confluence.json"
+    json_path = r"\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\confluence.json"
     
     if not os.path.exists(json_path):
+        logging.error("❌ Confluence JSON not found.")
         return {"error": "Confluence JSON not found."}
 
     with open(json_path, "r", encoding="utf-8") as f:

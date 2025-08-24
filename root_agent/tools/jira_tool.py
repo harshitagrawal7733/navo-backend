@@ -7,6 +7,7 @@ import os
 JIRA_DATA_PATH = r"C:\Users\HAG047\OneDrive - Maersk Group\Documents\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\jira.json"
 
 def fetch_jira_issues(query: str):
+    print(f"🔍 fetch_jira_tickets called with query: '{query}'")
     """Mock tool to search Jira issues JSON for matches"""
     if not os.path.exists(JIRA_DATA_PATH):
         return {"status": "error", "message": "Jira mock data file not found"}

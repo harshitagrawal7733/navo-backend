@@ -14,3 +14,7 @@ pathlib
 streamlit 
 flask-cors
 flask
+llama-index
+langchain
+langchain-google-vertexai
+faiss-cpu

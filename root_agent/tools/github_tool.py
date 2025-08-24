@@ -6,8 +6,8 @@ import os
 GITHUB_DATA_PATH = r"C:\Users\HAG047\OneDrive - Maersk Group\Documents\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\github.json"
 
 def fetch_github_prs(query: str):
-    """Mock tool to search GitHub PR JSON for matches"""
     print(f"🔍 fetch_github_prs called with query: '{query}'")
+    """Mock tool to search GitHub PR JSON for matches"""
     
     if not os.path.exists(GITHUB_DATA_PATH):
         print(f"❌ GitHub mock data file not found at path: {GITHUB_DATA_PATH}")
