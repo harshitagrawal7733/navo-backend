@@ -1,23 +1,25 @@
-# tools/servicenow_tool.py
+# Format a ServiceNow incident for embedding
+from .vector_db_agent import VectorDBAgent
 
-import json
-import os
+def servicenow_text_formatter(inc):
+    """
+    Format a ServiceNow incident dictionary into a string for embedding.
+    """
+    return f"Title: {inc.get('title', '')}\nDescription: {inc.get('description', '')}"
 
+# Create a vector database agent for ServiceNow incidents
+servicenow_agent = VectorDBAgent(
+    json_path=r"C:\Users\HSH164\navo-backend\navo-projects\Team001\project001\servicenow..json",
+    collection_name="servicenow_incidents",
+    persist_dir="./chroma_servicenow",
+    json_list_key="incidents",
+    text_formatter=servicenow_text_formatter
+)
+
+# Query ServiceNow incidents using semantic search
 def fetch_servicenow_incidents(query: str):
-    """Mock tool: fetch ServiceNow incidents from a local JSON file."""
-    json_path = r"C:\Users\HAG047\OneDrive - Maersk Group\Documents\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\servicenow.json"
-    
-    if not os.path.exists(json_path):
-        return {"error": "ServiceNow JSON not found."}
-
-    with open(json_path, "r", encoding="utf-8") as f:
-        incidents = json.load(f).get("incidents", [])
-
-    # If a query is provided, do simple filter
-    if query:
-        filtered = [i for i in incidents if query.lower() in (i.get("title", "") + i.get("description", "")).lower()]
-    else:
-        filtered = incidents
-
-    # Return top 3 results
-    return filtered[:3]
+    """
+    Query ServiceNow incidents stored in ChromaDB using vector search.
+    Returns top 3 most relevant incidents.
+    """
+    return servicenow_agent.query(query, top_k=3)

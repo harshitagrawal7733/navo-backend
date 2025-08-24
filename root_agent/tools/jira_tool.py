@@ -1,31 +1,22 @@
-# tools/jira_tool.py
+from .vector_db_agent import VectorDBAgent
 
-import json
-import os
+JIRA_DATA_PATH = r"C:\Users\HSH164\navo-backend\navo-projects\Team001\project001\jira.json"
 
-# Path to your mock Jira issues JSON file
-JIRA_DATA_PATH = r"C:\Users\HAG047\OneDrive - Maersk Group\Documents\msk-cargo-quest-navo\navo-backend\maersk-projects\Team001\project001\jira.json"
+def jira_text_formatter(issue):
+    return f"Key: {issue.get('key', '')}\nSummary: {issue.get('summary', '')}\nDescription: {issue.get('description', '')}"
+
+jira_agent = VectorDBAgent(
+    json_path=r"C:\Users\HSH164\navo-backend\navo-projects\Team001\project001\jira.json",
+    collection_name="jira_issues",
+    persist_dir="./chroma_jira",
+    json_list_key="issues",
+    text_formatter=jira_text_formatter
+)
 
 def fetch_jira_issues(query: str):
-    """Mock tool to search Jira issues JSON for matches"""
-    if not os.path.exists(JIRA_DATA_PATH):
-        return {"status": "error", "message": "Jira mock data file not found"}
-
-    with open(JIRA_DATA_PATH, "r") as f:
-        issues = json.load(f)
-
-    results = []
-    for issue in issues:
-        text = (
-            issue.get("key", "") + " " +
-            issue.get("summary", "") + " " +
-            issue.get("description", "")
-        ).lower()
-
-        if query.lower() in text:
-            results.append(issue)
-
-    return {
-        "status": "success",
-        "results": results[:3]  # return top 3 matches
-    }
+    """
+    Query Jira issues stored in ChromaDB using vector search.
+    Returns top 3 most relevant issues.
+    """
+def fetch_jira_issues(query: str):
+    return jira_agent.query(query, top_k=3)

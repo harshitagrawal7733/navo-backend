@@ -1,15 +1,10 @@
-import json
-from typing import Dict, Any
-from datetime import datetime
-from google.genai import types
+import datetime
 
 # ANSI color codes for terminal output
 class Colors:
     RESET = "\033[0m"
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
-
-    # Foreground colors
     BLACK = "\033[30m"
     RED = "\033[31m"
     GREEN = "\033[32m"
@@ -19,8 +14,6 @@ class Colors:
     CYAN = "\033[36m"
     WHITE = "\033[37m"
     OKGREEN = "\033[92m"
-
-    # Background colors
     BG_BLACK = "\033[40m"
     BG_RED = "\033[41m"
     BG_GREEN = "\033[42m"
@@ -29,284 +22,178 @@ class Colors:
     BG_MAGENTA = "\033[45m"
     BG_CYAN = "\033[46m"
     BG_WHITE = "\033[47m"
-
-    # Additional color shortcuts
     ENDC = RESET
     WARNING = YELLOW
     HEADER = MAGENTA
 
-def update_interaction_history(session_service, app_name, user_id, session_id, entry):
-    """Add an entry to the interaction history in state.
+def display_welcome_message():
+    print("\n🚀 Welcome to the Engineering Knowledge Assistant!")
+    print("I can help you perform semantic search across your engineering knowledge base:")
+    print("")
+    print("🔍 Try asking things like:")
+    print("  • 'Find similar PRs where we solved retry logic issues in Kafka consumers'")
+    print("  • 'Search Confluence for architecture docs on async order processing'")
+    print("  • 'Show Jira tickets related to payment gateway timeouts'")
+    print("  • 'Retrieve ServiceNow incidents linked to login failures'")
+    print("  • 'Find PRs that mention circuit breaker patterns'")
+    print("  • '    '")
+    print("")
+    print("💡 I use vector embeddings + semantic search to bring you the most relevant results from GitHub, Confluence, Jira, and ServiceNow.")
+    print("Let's get started!\n")
 
-    Args:
-        session_service: The session service instance
-        app_name: The application name
-        user_id: The user ID
-        session_id: The session ID
-        entry: A dictionary containing the interaction data
-            - requires 'action' key (e.g., 'user_query', 'agent_response')
-            - other keys are flexible depending on the action type
-    """
+def display_help():
+    """Display detailed help information."""
+    print(f"\n{Colors.HEADER}🔍 FINARA HELP - AVAILABLE COMMANDS{Colors.ENDC}")
+    print(f"{Colors.CYAN}")
+    print("FINANCIAL ANALYSIS COMMANDS:")
+    print("  net worth     - Complete financial overview")
+    print("  assets        - Asset breakdown and allocation")
+    print("  investments   - Investment performance summary")
+    print("  mutual funds  - MF portfolio analysis")
+    print("  stocks        - Equity holdings review")
+    print("  credit        - Credit score and card analysis")
+    print("  spending      - Expense tracking and insights")
+    print("  epf           - EPF balance and retirement planning")
+    print()
+    print("SYSTEM COMMANDS:")
+    print("  help          - Show this help message")
+    print("  status        - Show system and session status")
+    print("  clear         - Clear conversation history")
+    print("  logged in     - Mark yourself as logged in after web login")
+    print("  refresh       - Reset session and get new login URL")
+    print("  exit/quit     - Exit the application")
+    print(f"{Colors.ENDC}")
+
+def display_system_status(session):
+    """Display current system and session status."""
+    print(f"\n{Colors.HEADER}📊 SYSTEM STATUS{Colors.ENDC}")
+    print(f"{Colors.CYAN}")
+    print(f"User: {session.state.get('user_name', 'Unknown')}")
+    print(f"Session ID: {session.id}")
+    print(f"Current Agent: {session.state.get('current_agent', 'Unknown')}")
+    print(f"System Status: {session.state.get('system_status', 'Unknown')}")
+    print(f"Error Count: {session.state.get('error_count', 0)}")
+    print(f"Interactions: {len(session.state.get('interaction_history', []))}")
+    print(f"{Colors.ENDC}")
+
+def handle_system_commands(command, session, session_service, app_name, user_id, session_id):
+    """Handle system commands like help, status, clear."""
+    command = command.lower().strip()
+    
+    if command == "help":
+        display_help()
+        return True
+    elif command == "status":
+        display_system_status(session)
+        return True
+    elif command == "clear":
+        session.state["interaction_history"] = []
+        session.state["conversation_context"] = []
+        print(f"{Colors.GREEN}✅ Conversation history cleared.{Colors.ENDC}")
+        return True
+    elif command in ["logged in", "login done", "login complete", "logged"]:
+        # FIX: Ensure state is properly updated
+        session.state["is_authenticated"] = True
+        session.state["system_status"] = "authenticated"
+        session.state["use_existing_mcp_session"] = True
+        
+        # ADD: Force session state update
+        print(f"{Colors.YELLOW}DEBUG - Setting auth state: is_authenticated = True{Colors.RESET}")
+        
+        print(f"{Colors.GREEN}✅ Login status updated. You can now access your financial data.{Colors.ENDC}")
+        if session.state.get("mcp_session_id"):
+            print(f"{Colors.GREEN}🔑 Using MCP Session: {session.state.get('mcp_session_id')}{Colors.ENDC}")
+        
+        # ADD: Verify the state was set
+        print(f"{Colors.YELLOW}DEBUG - Verification: is_authenticated = {session.state.get('is_authenticated')}{Colors.RESET}")
+        
+        return True
+    elif command.startswith("mcp-session-") or (command.startswith("mcp_") and len(command) > 20):
+        # Extract MCP session ID from command
+        mcp_session_id = command
+        session.state["mcp_session_id"] = mcp_session_id
+        session.state["is_authenticated"] = True
+        session.state["system_status"] = "authenticated"
+        session.state["use_existing_mcp_session"] = True
+        print(f"{Colors.GREEN}✅ MCP Session ID stored: {mcp_session_id}{Colors.ENDC}")
+        print(f"{Colors.GREEN}✅ You can now access your financial data.{Colors.ENDC}")
+        return True
+    elif command in ["refresh", "reset", "new session"]:
+        session.state["mcp_session_id"] = None
+        session.state["is_authenticated"] = False
+        session.state["system_status"] = "ready"
+        session.state["use_existing_mcp_session"] = False
+        session.state["session_login_url"] = None
+        print(f"{Colors.YELLOW}🔄 Session reset. You'll get a new login URL on your next request.{Colors.ENDC}")
+        return True
+    elif command in ["exit", "quit", "bye"]:
+        print(f"{Colors.CYAN}👋 Thank you for using Finara! Goodbye!{Colors.ENDC}")
+        return "exit"
+    
+    return False
+
+def update_session_state_after_execution(session, final_response):
+    """Update session state after agent execution."""
     try:
-        # Try to get session with session_id only first (InMemorySessionService style)
-        try:
-            session = session_service.get_session(session_id)
-        except:
-            # Fallback to full parameters if needed
-            session = session_service.get_session(
-                app_name=app_name, user_id=user_id, session_id=session_id
-            )
-
-        # Get current interaction history
-        interaction_history = session.state.get("interaction_history", [])
+        # Update last active agent
+        if hasattr(final_response, 'agent_used'):
+            session.state["last_active_subagent"] = final_response.agent_used
         
-        # Debug: Print session info
-        print(f"{Colors.MAGENTA}DEBUG: Session {session.id}, updating interaction_history{Colors.RESET}")
-        print(f"{Colors.MAGENTA}DEBUG: Current history length: {len(interaction_history)}{Colors.RESET}")
-
-        # Add timestamp if not already present
-        if "timestamp" not in entry:
-            entry["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Add the entry to interaction history
-        interaction_history.append(entry)
-
-        # Update state directly
-        session.state["interaction_history"] = interaction_history
+        # Update system status
+        session.state["system_status"] = "active"
         
-        print(f"{Colors.CYAN}Added to interaction history: {entry['action']}{Colors.RESET}")
-        print(f"{Colors.CYAN}Total interaction history entries: {len(interaction_history)}{Colors.RESET}")
-
+        # Reset error count on successful execution
+        session.state["error_count"] = 0
+        session.state["last_error"] = None
+        
+        # Update conversation context 
+        context = session.state.get("conversation_context", [])
+        context.append({
+            "timestamp": datetime.now().isoformat(),
+            "response_summary": str(final_response)[:200] + "..." if len(str(final_response)) > 200 else str(final_response)
+        })
+        session.state["conversation_context"] = context[-10:]  # Keep last 10
+        
     except Exception as e:
-        print(f"Error updating interaction history: {e}")
-        import traceback
-        traceback.print_exc()
+        print(f"{Colors.YELLOW}Warning: Could not update session state: {e}{Colors.ENDC}")
 
-def add_user_query_to_history(session_service, app_name, user_id, session_id, query):
-    """Add a user query to the interaction history."""
-    update_interaction_history(
-        session_service,
-        app_name,
-        user_id,
-        session_id,
-        {
-            "action": "user_query",
-            "query": query,
-        },
-    )
+def handle_execution_error(session, error, user_query):
+    """Handle and log execution errors with proper categorization."""
+    session.state["error_count"] = session.state.get("error_count", 0) + 1
+    session.state["last_error"] = {
+        "message": str(error),
+        "timestamp": datetime.now().isoformat(),
+        "query": user_query,
+        "error_type": type(error).__name__
+    }
+    session.state["system_status"] = "error"
+    
+    error_str = str(error).lower()
+    
+    if "authentication" in error_str or "session" in error_str:
+        print(f"{Colors.YELLOW}🔐 Authentication Issue Detected{Colors.ENDC}")
+        print(f"{Colors.CYAN}It looks like you need to log in to access your financial data.{Colors.ENDC}")
+        print(f"{Colors.CYAN}The system will guide you through the login process on your next request.{Colors.ENDC}")
+    elif "timeout" in error_str or "connection" in error_str:
+        print(f"{Colors.YELLOW}🌐 Connection Issue Detected{Colors.ENDC}")
+        print(f"{Colors.CYAN}There seems to be a connectivity issue. Please try again in a moment.{Colors.ENDC}")
+    elif "tool" in error_str:
+        print(f"{Colors.YELLOW}🔧 Tool Execution Issue{Colors.ENDC}")
+        print(f"{Colors.CYAN}There was an issue executing the financial tool. Please try rephrasing your request.{Colors.ENDC}")
+    else:
+        print(f"{Colors.RED}❌ An unexpected error occurred: {error}{Colors.ENDC}")
+        if session.state["error_count"] >= 3:
+            print(f"{Colors.YELLOW}⚠️  Multiple errors detected. Type 'status' to check system health.{Colors.ENDC}")
 
-def add_agent_response_to_history(
-    session_service, app_name, user_id, session_id, agent_name, response
-):
-    """Add an agent response to the interaction history."""
-    update_interaction_history(
-        session_service,
-        app_name,
-        user_id,
-        session_id,
-        {
-            "action": "agent_response",
-            "agent": agent_name,
-            "response": response,
-        },
-    )
+def display_agent_outputs(state):
+    """Display agent outputs from state """
+    # Only show if there are actual outputs and they're different from what was just displayed
+    outputs_found = False
+    for key, value in state.items():
+        if key.endswith('_output') and value:
+            outputs_found = True
+            break
+    
+    if not outputs_found:
+        print(f"{Colors.YELLOW}No additional outputs to display.{Colors.RESET}")
 
-def display_state(
-    session_service, app_name, user_id, session_id, label="Current State"
-):
-    """Display the current session state in a formatted way."""
-    try:
-        # Get session with full parameters to ensure consistency
-        try:
-            session = session_service.get_session(
-                app_name=app_name, user_id=user_id, session_id=session_id
-            )
-        except:
-            # Fallback to session_id only if the above fails
-            session = session_service.get_session(session_id)
-
-        # Format the output with clear sections
-        print(f"\n{'-' * 10} {label} {'-' * 10}")
-        
-        # Debug: Print session info
-        print(f"{Colors.MAGENTA}DEBUG: Display session {session.id}{Colors.RESET}")
-
-        # Show user name
-        user_name = session.state.get("user_name", "Unknown")
-        print(f"User: {user_name}")
-
-        # Show API data keys only
-        api_data = session.state.get("api_data", {})
-        print("API Data loaded:")
-        for key in api_data.keys():
-            print(f"  - {key}")
-
-        # Show agent switches
-        agent_data_keys = [k for k in session.state.keys() if k.endswith("_agent_data")]
-        if agent_data_keys:
-            print("Agent switches:")
-            for key in agent_data_keys:
-                agent_name = key.replace("_agent_data", "")
-                print(f"  - {agent_name}")
-
-        # Show interaction history
-        interaction_history = session.state.get("interaction_history", [])
-        print("Interaction History:")
-        if interaction_history:
-            for idx, interaction in enumerate(interaction_history, 1):
-                if isinstance(interaction, dict):
-                    action = interaction.get("action", "interaction")
-                    timestamp = interaction.get("timestamp", "unknown time")
-                    if action == "user_query":
-                        query = interaction.get("query", "")
-                        print(f'  {idx}. User query at {timestamp}: "{query}"')
-                    elif action == "agent_response":
-                        agent = interaction.get("agent", "unknown")
-                        response = interaction.get("response", "")
-                        print(f'  {idx}. {agent} response at {timestamp}: "{response}"')
-                    else:
-                        print(f"  {idx}. {action} at {timestamp}")
-                else:
-                    print(f"  {idx}. {interaction}")
-        else:
-            print("  None")
-
-        # Show agent outputs
-        agent_outputs = [k for k in session.state.keys() if k.endswith("_output")]
-        if agent_outputs:
-            print("Agent Outputs:")
-            for key in agent_outputs:
-                print(f"  - {key}")
-        else:
-            print("Agent Outputs: None")
-
-        print("-" * (22 + len(label)))
-    except Exception as e:
-        print(f"Error displaying state: {e}")
-        import traceback
-        traceback.print_exc()
-
-def display_agent_outputs(session_state):
-    """Display all agent outputs from the session state."""
-    agent_keys = [
-        "finara_coordinator_output",
-        "credit_card_agent_output",
-        "epf_agent_output",
-        "equity_agent_output",
-        "loan_agent_output",
-        "mf_agent_output",
-        "net_worth_agent_output",
-        "spending_insights_agent_output",
-    ]
-    print("\n--- Agent Outputs ---")
-    for key in agent_keys:
-        output = session_state.get(key)
-        if output:
-            print(f"{key}: {output}")
-    print("---------------------\n")
-
-# Async function to process agent responses from the runner
-async def process_agent_response(event):
-    """Process and display agent response events."""
-    print(f"Event ID: {event.id}, Author: {event.author}")
-
-    # Check for specific parts first
-    has_specific_part = False
-    if event.content and event.content.parts:
-        for part in event.content.parts:
-            if hasattr(part, "text") and part.text and not part.text.isspace():
-                print(f"  Text: '{part.text.strip()}'")
-                has_specific_part = True
-
-    # Check for final response after specific parts
-    final_response = None
-    if event.is_final_response():
-        if (
-            event.content
-            and event.content.parts
-            and hasattr(event.content.parts[0], "text")
-            and event.content.parts[0].text
-        ):
-            final_response = event.content.parts[0].text.strip()
-            # Use colors and formatting to make the final response stand out
-            print(
-                f"\n{Colors.BG_BLUE}{Colors.WHITE}{Colors.BOLD}╔══ AGENT RESPONSE ═════════════════════════════════════════{Colors.RESET}"
-            )
-            print(f"{Colors.CYAN}{Colors.BOLD}{final_response}{Colors.RESET}")
-            print(
-                f"{Colors.BG_BLUE}{Colors.WHITE}{Colors.BOLD}╚═════════════════════════════════════════════════════════════{Colors.RESET}\n"
-            )
-        else:
-            print(
-                f"\n{Colors.BG_RED}{Colors.WHITE}{Colors.BOLD}==> Final Agent Response: [No text content in final event]{Colors.RESET}\n"
-            )
-
-    return final_response
-
-async def call_agent_async(runner, user_id, session_id, query):
-    """Call the agent asynchronously with the user's query."""
-    content = types.Content(role="user", parts=[types.Part(text=query)])
-    print(
-        f"\n{Colors.BG_GREEN}{Colors.BLACK}{Colors.BOLD}--- Running Query: {query} ---{Colors.RESET}"
-    )
-    final_response_text = None
-    active_agent_name = None
-
-    # Display state before processing the message
-    display_state(
-        runner.session_service,
-        runner.app_name,
-        user_id,
-        session_id,
-        "State BEFORE processing",
-    )
-
-    try:
-        async for event in runner.run_async(
-            user_id=user_id, session_id=session_id, new_message=content
-        ):
-            # Capture the agent name from the event if available
-            if event.author:
-                active_agent_name = event.author
-                print(f"{Colors.YELLOW}Active Agent: {active_agent_name}{Colors.RESET}")
-
-            response = await process_agent_response(event)
-            if response:
-                final_response_text = response
-    except Exception as e:
-        print(f"{Colors.BG_RED}{Colors.WHITE}ERROR during agent run: {e}{Colors.RESET}")
-
-    # Update the correct agent output in the session state
-    if final_response_text and active_agent_name:
-        session = runner.session_service.get_session(
-            app_name=runner.app_name, user_id=user_id, session_id=session_id
-        )
-        
-        # Map agent names to their output keys
-        agent_output_key = f"{active_agent_name}_output"
-        session.state[agent_output_key] = final_response_text
-        session.state["last_active_subagent"] = active_agent_name
-        
-        print(f"{Colors.GREEN}Updated {agent_output_key} with response{Colors.RESET}")
-
-        # Add the agent response to interaction history
-        add_agent_response_to_history(
-            runner.session_service,
-            runner.app_name,
-            user_id,
-            session_id,
-            active_agent_name,
-            final_response_text,
-        )
-
-    # Display state after processing the message
-    display_state(
-        runner.session_service,
-        runner.app_name,
-        user_id,
-        session_id,
-        "State AFTER processing",
-    )
-
-    print(f"{Colors.YELLOW}{'-' * 30}{Colors.RESET}")
-    return final_response_text
