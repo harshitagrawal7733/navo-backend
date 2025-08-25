@@ -3,6 +3,9 @@
 ## Overview
 This project is a reusable GenAI-powered internal memory system designed to help engineering teams avoid reinventing the wheel. It retrieves solutions to similar problems from GitHub PRs, Jira tickets, Confluence docs, and ServiceNow incidents using semantic search and historical context awareness.
 
+![Uploading image.png…]()
+
+
 ## Features
 - **Semantic Search:** Find contextually similar incidents, code, or documentation from engineering history.
 - **Memory Suggestions:** Get recommendations based on how similar issues were resolved in the past.
