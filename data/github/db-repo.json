@@ -1,0 +1,59 @@
+{
+  "repo": "airfreight-cargo-db",
+  "prs": [
+    {
+      "id": "PR-301",
+      "title": "Add Cargo Booking Table and API Endpoint",
+      "description": "Introduced cargo_booking table and /api/bookings endpoint for air freight bookings.",
+      "author": "Sophia",
+      "team": "Backend",
+      "created_at": "2025-07-12T10:00:00Z",
+      "files_changed": ["api/bookings.py", "models/cargo_booking.py", "migrations/001_create_cargo_booking.sql"],
+      "labels": ["feature", "cargo", "backend"]
+    },
+    {
+      "id": "PR-302",
+      "title": "Flight Tracking Integration with IATA API",
+      "description": "Integrated IATA flight status API for real-time flight tracking.",
+      "author": "Arjun",
+      "team": "Backend",
+      "created_at": "2025-07-18T14:30:00Z",
+      "files_changed": ["services/flight_tracking.py", "utils/iata_api.py"],
+      "labels": ["integration", "flights", "tracking"]
+    }
+  ],
+  "files": [
+    {
+      "path": "api/bookings.py",
+      "content": "# API endpoint for cargo bookings\n..."
+    },
+    {
+      "path": "models/cargo_booking.py",
+      "content": "# CargoBooking model for air freight\n..."
+    },
+    {
+      "path": "migrations/001_create_cargo_booking.sql",
+      "content": "-- SQL migration for cargo_booking table\n..."
+    },
+    {
+      "path": "services/flight_tracking.py",
+      "content": "# Service for integrating with IATA flight status API\n..."
+    },
+    {
+      "path": "utils/iata_api.py",
+      "content": "# Utility for calling IATA flight status API\n..."
+    }
+  ],
+  "discussions": [
+    {
+      "id": "DISC-301",
+      "title": "Should we support multi-leg cargo bookings?",
+      "author": "Priya",
+      "created_at": "2025-07-10T09:00:00Z",
+      "comments": [
+        {"author": "Sophia", "text": "Multi-leg support is needed for transshipment routes."},
+        {"author": "Arjun", "text": "Let's add this as a future scope after MVP."}
+      ]
+    }
+  ]
+}

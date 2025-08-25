@@ -33,8 +33,6 @@ except Exception as e:
     BASE_URL = 'http://localhost:8080'
 
 load_dotenv()
-# DEBUG: Print the loaded GOOGLE_GENAI_API_KEY to verify .env loading
-print("DEBUG: GOOGLE_GENAI_API_KEY =", os.environ.get("GOOGLE_GENAI_API_KEY"))
 # Ensure API_KEY is set for libraries that expect it
 if "GOOGLE_GENAI_API_KEY" in os.environ:
     os.environ["API_KEY"] = os.environ["GOOGLE_GENAI_API_KEY"]
@@ -66,7 +64,7 @@ initial_state = {
     "use_existing_mcp_session": False,
     
     # Agent State (Simplified)
-    "current_agent": "finara_coordinator",
+    "current_agent": "navo_coordinator",
     "last_active_subagent": None,
     "last_agent_response": None,
     
@@ -226,7 +224,7 @@ async def execute_user_query(session, session_service, app_name, user_id, sessio
         # fresh_session = await session_service.get_session(app_name=app_name, user_id=user_id, session_id=session_id)
 
         # Create runner with up-to-date coordinator
-        root_agent_instance = root_agent(session=None)
+        root_agent_instance = root_agent(session=session)
         runner = Runner(
            agent=root_agent_instance,
            app_name=app_name,
@@ -280,55 +278,57 @@ async def execute_user_query(session, session_service, app_name, user_id, sessio
         
         return False
 
+
 async def main():
-    """Enhanced main async function to run the Finara agent system."""
+    """Enhanced main async function to run the Navo agent system."""
     # Define App constants
-    APP_NAME = "Finara"
+    APP_NAME = "Navo"
     USER_ID = initial_state["user_id"]
 
-    print(f"{Colors.GREEN}🚀 Initializing Finara Financial Assistant...{Colors.ENDC}")
-    
+    print(f"{Colors.GREEN}🚀 Initializing Navo Engineering Assistant...{Colors.ENDC}")
     try:
         # Create session service and session properly with await
         session_service = InMemorySessionService()
-        
         # Create a new session and set its initial state (await the async call)
-        # Removed await
-        session =  session_service.create_session(app_name=APP_NAME, user_id=USER_ID, state=initial_state)
+        session = session_service.create_session(app_name=APP_NAME, user_id=USER_ID, state=initial_state)
         SESSION_ID = session.id
-        
         print(f"{Colors.GREEN}✅ Session created with ID: {SESSION_ID}{Colors.ENDC}")
-        
     except Exception as e:
         print(f"{Colors.RED}❌ Failed to initialize session: {e}{Colors.ENDC}")
         print(f"{Colors.YELLOW}Please check your ADK setup and try again.{Colors.ENDC}")
         return
-    
     # Display welcome message
-    display_welcome_message()
+    print(f"""
+{Colors.CYAN}🚀 Welcome to the Navo Engineering Knowledge Assistant!{Colors.RESET}
+I can help you perform semantic search across your engineering knowledge base:
+
+  • 'Find similar PRs where we solved retry logic issues in Kafka consumers'
+  • 'Search Confluence for architecture docs on async order processing'
+  • 'Show Jira tickets related to payment gateway timeouts'
+  • 'Retrieve ServiceNow incidents linked to login failures'
+  • 'Find PRs that mention circuit breaker patterns'
+
+💡 I use vector embeddings + semantic search to bring you the most relevant results from GitHub, Confluence, Jira, and ServiceNow.
+Let's get started!{Colors.RESET}
+""")
 
     # Main interaction loop
     while True:
         try:
             user_query = input(f"\n{Colors.BOLD}💬 You: {Colors.ENDC}").strip()
-            
             if not user_query:
                 continue
-                
             # Handle system commands
             command_result = handle_system_commands(user_query, session, session_service, APP_NAME, USER_ID, SESSION_ID)
             if command_result == "exit":
                 break
             elif command_result:
                 continue
-            
             # Execute user query
             success = await execute_user_query(session, session_service, APP_NAME, USER_ID, SESSION_ID, user_query)
-            
             if not success and session.state.get("error_count", 0) >= 5:
                 print(f"{Colors.RED}❌ Too many errors encountered. Please restart the application.{Colors.ENDC}")
                 break
-                
         except KeyboardInterrupt:
             print(f"\n{Colors.CYAN}👋 Session interrupted. Goodbye!{Colors.ENDC}")
             break
@@ -336,16 +336,15 @@ async def main():
             print(f"{Colors.RED}❌ Critical system error: {e}{Colors.ENDC}")
             session.state["system_status"] = "critical_error"
             break
-
     # Cleanup and final status
     print(f"\n{Colors.HEADER}📊 FINAL SESSION SUMMARY{Colors.ENDC}")
     print(f"{Colors.CYAN}Total Interactions: {len(session.state.get('interaction_history', []))}{Colors.ENDC}")
     print(f"{Colors.CYAN}Errors Encountered: {session.state.get('error_count', 0)}{Colors.ENDC}")
-    print(f"{Colors.GREEN}Thank you for using Finara! 🏦✨{Colors.ENDC}")
+    print(f"{Colors.GREEN}Thank you for using Navo! 🚀✨{Colors.ENDC}")
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
     except Exception as e:
-        print(f"{Colors.RED}❌ Fatal error starting Finara: {e}{Colors.ENDC}")
+        print(f"{Colors.RED}❌ Fatal error starting Navo: {e}{Colors.ENDC}")
         print(f"{Colors.YELLOW}Please check your environment setup and try again.{Colors.ENDC}")

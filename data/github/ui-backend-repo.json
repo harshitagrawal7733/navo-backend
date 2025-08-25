@@ -1,0 +1,100 @@
+{
+  "repo": "projectA-ui-backend",
+  "prs": [
+    {
+      "id": "PR-701",
+      "title": "Implement JWT Authentication Middleware",
+      "description": "Added JWT middleware in backend with refresh token support.",
+      "author": "Liam",
+      "team": "Backend Dev",
+      "created_at": "2025-07-20T12:15:00Z",
+      "files_changed": ["backend/middleware/auth.py", "backend/routes/user.py"],
+      "labels": ["feature", "security"]
+    },
+    {
+      "id": "PR-702",
+      "title": "UI: Add Login Page",
+      "description": "Introduced React login form with email/password authentication flow.",
+      "author": "Emma",
+      "team": "Frontend Dev",
+      "created_at": "2025-07-22T09:30:00Z",
+      "files_changed": ["frontend/src/pages/Login.jsx", "frontend/src/App.js"],
+      "labels": ["frontend", "feature"]
+    }
+  ],
+  "discussions": [
+    {
+      "id": "DISC-901",
+      "title": "Unable to Validate JWT Tokens in Pre-Prod",
+      "contact": "oliver",
+      "api_proxy_name": "projectA-auth-proxy",
+      "environment": "Pre-Prod",
+      "request_type": "Report an Issue",
+      "related_to": "Consuming API",
+      "details": "JWT tokens generated via Auth0 fail validation in Pre-Prod while working in CDT. Error: `401 Unauthorized – invalid signature`. Config points to the same JWKS URL in both environments.",
+      "created_at": "2025-07-21T16:00:00Z",
+      "responses": [
+        {
+          "author": "Anna (Security Lead)",
+          "body": "Hi Oliver, the issue seems to be that Pre-Prod is still pointing at an older JWKS cached key set. Please clear the JWKS cache in the proxy and redeploy to Pre-Prod. I've patched this in Revision 4."
+        },
+        {
+          "author": "Oliver",
+          "body": "Thanks Anna, clearing the JWKS cache fixed the problem. Tokens now validate in Pre-Prod."
+        }
+      ]
+    },
+    {
+      "id": "DISC-902",
+      "title": "403 Errors on Login API",
+      "contact": "emma",
+      "api_proxy_name": "projectA-login-proxy",
+      "environment": "Production",
+      "request_type": "Report an Issue",
+      "related_to": "Consuming API",
+      "details": "Users intermittently get `403 Forbidden` when submitting login form. No errors appear in our backend logs, but Apigee gateway returns the response.",
+      "created_at": "2025-07-23T10:30:00Z",
+      "responses": [
+        {
+          "author": "Dan (Ops)",
+          "body": "This looks similar to Akamai edge rejections we saw before. The requests might be blocked at the WAF layer, not inside Apigee. Please raise with SES team to confirm."
+        },
+        {
+          "author": "Emma",
+          "body": "Confirmed with SES — the 403 was caused by an overly strict bot detection rule on login requests. They've added an exemption for the login proxy. Issue resolved."
+        }
+      ]
+    },
+    {
+      "id": "DISC-903",
+      "title": "OAuth2 Integration Request",
+      "contact": "liam",
+      "api_proxy_name": "projectA-auth-proxy",
+      "environment": "CDT",
+      "request_type": "Customization",
+      "related_to": "Publishing API",
+      "details": "We need to support both JWT (internal clients) and OAuth2 (external clients) on the same login endpoint. Currently only JWT validation is configured. Can we add OAuth2 scopes without breaking JWT consumers?",
+      "created_at": "2025-07-25T14:45:00Z",
+      "responses": [
+        {
+          "author": "Anna (Security Lead)",
+          "body": "Yes, this is possible. Add an exemption object in the proxy configuration to bypass the VerifyJWT policy when an OAuth2 bearer token is present. I’ve added this in Revision 5 deployed to CDT. Please promote it after testing."
+        },
+        {
+          "author": "Liam",
+          "body": "Confirmed working in CDT — both JWT and OAuth2 are supported. Will promote to Pre-Prod after regression testing."
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "backend/middleware/auth.py",
+      "content": "def verify_jwt(token: str):\n    # validate JWT and handle expiry\n    ..."
+    },
+    {
+      "path": "frontend/src/pages/Login.jsx",
+      "content": "export default function Login() {\n  return (<form>...</form>);\n}"
+    }
+  ]
+}

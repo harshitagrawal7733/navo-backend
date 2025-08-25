@@ -1,0 +1,23 @@
+{
+  "incidents": [
+    {
+      "id": "INC-9101",
+      "title": "Flight status API outage",
+      "description": "Flight status API was unavailable for 45 minutes, affecting real-time cargo tracking.",
+      "status": "Resolved",
+      "created_at": "2025-07-20T11:00:00Z",
+      "resolved_at": "2025-07-20T11:45:00Z",
+      "root_cause": "Expired SSL certificate on upstream provider.",
+      "resolution": "Renewed certificate and restarted API gateway."
+    },
+    {
+      "id": "INC-9102",
+      "title": "Cargo overbooking incident",
+      "description": "System allowed booking of 120% cargo capacity on flight AF123. Manual intervention required.",
+      "status": "Open",
+      "created_at": "2025-07-22T09:00:00Z",
+      "root_cause": "Validation bug in booking logic.",
+      "resolution": ""
+    }
+  ]
+}

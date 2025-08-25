@@ -1,0 +1,51 @@
+{
+  "epics": [
+    {
+      "id": "EPIC-2001",
+      "title": "Air Cargo Booking and Tracking",
+      "description": "Enable booking, tracking, and management of air freight shipments for customers and operations."
+    }
+  ],
+  "stories": [
+    {
+      "id": "STORY-2101",
+      "title": "As a freight forwarder, I want to book cargo space on a flight",
+      "status": "In Progress",
+      "assignee": "Priya"
+    },
+    {
+      "id": "STORY-2102",
+      "title": "As an airline operator, I want to view real-time flight and cargo status",
+      "status": "To Do",
+      "assignee": "Liam"
+    }
+  ],
+  "bugs": [
+    {
+      "id": "BUG-2201",
+      "title": "Flight tracking map not updating for delayed flights",
+      "status": "Open",
+      "assignee": "Emma"
+    },
+    {
+      "id": "BUG-2202",
+      "title": "Cargo booking form allows overbooking beyond aircraft capacity",
+      "status": "In Progress",
+      "assignee": "Arjun"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-2301",
+      "title": "Integrate with IATA flight data API",
+      "status": "To Do",
+      "assignee": "Sophia"
+    },
+    {
+      "id": "TASK-2302",
+      "title": "Write unit tests for cargo booking logic",
+      "status": "To Do",
+      "assignee": "Dan"
+    }
+  ]
+}

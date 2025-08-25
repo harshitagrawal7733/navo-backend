@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 # ANSI color codes for terminal output
 class Colors:
@@ -43,7 +43,7 @@ def display_welcome_message():
 
 def display_help():
     """Display detailed help information."""
-    print(f"\n{Colors.HEADER}🔍 FINARA HELP - AVAILABLE COMMANDS{Colors.ENDC}")
+    print(f"\n{Colors.HEADER}🔍 NAVO HELP - AVAILABLE COMMANDS{Colors.ENDC}")
     print(f"{Colors.CYAN}")
     print("FINANCIAL ANALYSIS COMMANDS:")
     print("  net worth     - Complete financial overview")
@@ -127,7 +127,7 @@ def handle_system_commands(command, session, session_service, app_name, user_id,
         print(f"{Colors.YELLOW}🔄 Session reset. You'll get a new login URL on your next request.{Colors.ENDC}")
         return True
     elif command in ["exit", "quit", "bye"]:
-        print(f"{Colors.CYAN}👋 Thank you for using Finara! Goodbye!{Colors.ENDC}")
+        print(f"{Colors.CYAN}👋 Thank you for using Navo! Goodbye!{Colors.ENDC}")
         return "exit"
     
     return False

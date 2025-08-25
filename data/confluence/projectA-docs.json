@@ -1,0 +1,31 @@
+{
+  "project": "airfreight-cargo-platform",
+  "overview": {
+    "title": "Project Overview",
+    "content": "The AirFreight Cargo Platform is a web application for managing air cargo shipments, tracking flights, and optimizing cargo space for airlines and freight forwarders. It integrates with airline APIs, airport systems, and customs authorities."
+  },
+  "architecture": {
+    "title": "System Architecture",
+    "content": "The platform features a React frontend for booking and tracking, a Python FastAPI backend for business logic, and a PostgreSQL database. Integrations include IATA flight data, airport slot management, and customs clearance APIs."
+  },
+  "api_docs": {
+    "title": "API Documentation",
+    "content": "Key endpoints: /api/bookings (POST/GET), /api/flights (GET), /api/cargo (POST/GET), /api/alerts (POST). APIs use OAuth2 and support integration with airline SSO."
+  },
+  "ui_ux": {
+    "title": "UI/UX",
+    "content": "The UI provides real-time flight tracking, cargo booking dashboards, and exception alerts. User flows are tailored for freight forwarders, airline ops, and customs agents."
+  },
+  "db_design": {
+    "title": "Database Design",
+    "content": "Schema includes shipments, cargo items, flights, customers, and event logs. Migrations managed with Liquibase. See ER diagram in /docs/db/airfreight_er_diagram.png."
+  },
+  "future_scope": {
+    "title": "Future Scope",
+    "content": "Planned features: AI-based cargo space optimization, predictive delay alerts, and automated customs document generation."
+  },
+  "onboarding": {
+    "title": "Onboarding Guide",
+    "content": "To run locally: 1. Clone repo 2. Install dependencies 3. Set AIRFREIGHT_API_KEY 4. Run docker-compose up. For troubleshooting, see the runbook."
+  }
+}

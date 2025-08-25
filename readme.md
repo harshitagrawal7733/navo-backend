@@ -47,7 +47,7 @@ navo-backend/
 │   │   ├── get_session_id.py
 │   │   ├── tool_list_metadata.py
 │   │   ├── tool_router.py
-├── maersk-projects/
+├── navo-projects/
 │   ├── Team001/
 │   │   ├── project001/
 │   │   │   ├── github.json
@@ -110,4 +110,4 @@ navo-backend/
 MIT License
 
 ## Contact
-For questions or support, contact the Maersk engineering team.
+For questions or support, contact the Navo engineering team.

@@ -48,7 +48,19 @@ class VectorDBAgent:
         with open(self.json_path, "r", encoding="utf-8") as f:
             loaded = json.load(f)
             # Support both dict and list top-level JSON structures
-            if isinstance(loaded, dict):
+            if self.json_list_key is None:
+                # Treat the file as a list at the top level
+                if isinstance(loaded, list):
+                    data = loaded
+                elif isinstance(loaded, dict):
+                    # If dict, flatten all values that are lists
+                    data = []
+                    for v in loaded.values():
+                        if isinstance(v, list):
+                            data.extend(v)
+                else:
+                    raise ValueError(f"Unexpected JSON structure in {self.json_path}: {type(loaded)}")
+            elif isinstance(loaded, dict):
                 data = loaded.get(self.json_list_key, [])
             elif isinstance(loaded, list):
                 data = loaded
