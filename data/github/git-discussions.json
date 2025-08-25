@@ -1,0 +1,255 @@
+[
+    {
+  "github_discussions": [
+    {
+      "discussion_id": "DISC-001",
+      "title": "[Q&A] Clarification on NAVO Chat Service Preferences Handling",
+      "category": "Q&A",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-24T10:30:00Z"
+      },
+      "related_jira": "NAVO-112",
+      "related_pr": "#45",
+      "related_incident": "INC-56789",
+      "content": "Hi Team,\n\nWhile working on ServiceNow Incident INC-56789, I made code changes in the ChatController to properly pass preferences along with the query. We already linked the PR (#45) with Jira Ticket NAVO-112.\n\nBefore merging, I’d like clarity on the following:\n1. Should tester role preferences be stored in DB or only in local cache?\n2. For support role, do we restrict access only to logs or allow limited chat testing?\n3. Do we also need to update Confluence onboarding docs as part of this change?\n\nTagging @TechLead and @QA for input.",
+      "comments": [
+        {
+          "comment_id": "DISC-001-COM-01",
+          "commented_by": {
+            "name": "Priya Sharma",
+            "role": "QA Engineer"
+          },
+          "comment": "I suggest keeping tester role preferences in DB for auditability. Support role should be log-only, not chat testing.",
+          "timestamp": "2025-08-24T11:00:00Z"
+        },
+        {
+          "comment_id": "DISC-001-COM-02",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "Agree with QA. Also, update Confluence onboarding to reflect preference-based behavior and notify support team.",
+          "timestamp": "2025-08-24T11:15:00Z"
+        },
+        {
+          "comment_id": "DISC-001-COM-03",
+          "commented_by": {
+            "name": "Harshit Agrawal",
+            "role": "Developer"
+          },
+          "comment": "Thanks for inputs, will update DB handling for tester role and modify onboarding docs. PR #45 will be updated accordingly.",
+          "timestamp": "2025-08-24T11:30:00Z"
+        }
+      ],
+      "status": "Resolved",
+      "resolved_at": "2025-08-24T11:30:00Z",
+      "tags": ["preferences", "chat-service", "onboarding", "INC-56789"]
+    }
+  ]
+},
+{
+  "github_discussions": [
+    {
+      "discussion_id": "DISC-001",
+      "title": "[Q&A] Clarification on NAVO Chat Service Preferences Handling",
+      "category": "Q&A",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-24T10:30:00Z"
+      },
+      "related_jira": "NAVO-112",
+      "related_pr": "#45",
+      "related_incident": "INC-56789",
+      "content": "Hi Team,\n\nWhile working on ServiceNow Incident INC-56789, I made code changes in the ChatController to properly pass preferences along with the query. We already linked the PR (#45) with Jira Ticket NAVO-112.\n\nBefore merging, I’d like clarity on the following:\n1. Should tester role preferences be stored in DB or only in local cache?\n2. For support role, do we restrict access only to logs or allow limited chat testing?\n3. Do we also need to update Confluence onboarding docs as part of this change?\n\nTagging @TechLead and @QA for input.",
+      "comments": [
+        {
+          "comment_id": "DISC-001-COM-01",
+          "commented_by": {
+            "name": "Priya Sharma",
+            "role": "QA Engineer"
+          },
+          "comment": "I suggest keeping tester role preferences in DB for auditability. Support role should be log-only, not chat testing.",
+          "timestamp": "2025-08-24T11:00:00Z"
+        },
+        {
+          "comment_id": "DISC-001-COM-02",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "Agree with QA. Also, update Confluence onboarding to reflect preference-based behavior and notify support team.",
+          "timestamp": "2025-08-24T11:15:00Z"
+        },
+        {
+          "comment_id": "DISC-001-COM-03",
+          "commented_by": {
+            "name": "Harshit Agrawal",
+            "role": "Developer"
+          },
+          "comment": "Thanks for inputs, will update DB handling for tester role and modify onboarding docs. PR #45 will be updated accordingly.",
+          "timestamp": "2025-08-24T11:30:00Z"
+        }
+      ],
+      "status": "Resolved",
+      "resolved_at": "2025-08-24T11:30:00Z",
+      "tags": ["preferences", "chat-service", "onboarding", "INC-56789"]
+    }
+  ]
+},
+{
+  "github_discussions": [
+    {
+      "discussion_id": "DISC-005",
+      "title": "[Discussion] Dockerization and Microservices Strategy",
+      "category": "Discussion",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-25T12:00:00Z"
+      },
+      "related_jira": null,
+      "related_pr": null,
+      "related_incident": null,
+      "content": "Hi Team,\n\nWe need to standardize Docker images and microservices deployment for NAVO. Points for discussion:\n1. Should each microservice have its own Dockerfile or a shared base image?\n2. How do we handle environment variables securely across dev, staging, and prod?\n3. Best practices for container orchestration using Kubernetes within Maersk infrastructure.",
+      "comments": [
+        {
+          "comment_id": "DISC-005-COM-01",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "Each service should have its own Dockerfile but share a base image to reduce size. Use Kubernetes secrets for environment variables.",
+          "timestamp": "2025-08-25T12:30:00Z"
+        },
+        {
+          "comment_id": "DISC-005-COM-02",
+          "commented_by": {
+            "name": "Naveen Rao",
+            "role": "DevOps Engineer"
+          },
+          "comment": "Agree. Also, automated CI/CD pipelines should build, test, and deploy containers with tagging strategy for versioning.",
+          "timestamp": "2025-08-25T12:45:00Z"
+        }
+      ],
+      "status": "Open",
+      "resolved_at": null,
+      "tags": ["docker", "microservices", "kubernetes", "devops"]
+    },
+    {
+      "discussion_id": "DISC-006",
+      "title": "[Q&A] Handling Sensitive Credentials in NAVO",
+      "category": "Q&A",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-25T13:00:00Z"
+      },
+      "related_jira": null,
+      "related_pr": null,
+      "related_incident": null,
+      "content": "Team, while integrating APIs for NAVO, we need to handle sensitive credentials securely. Options:\n1. Environment variables\n2. HashiCorp Vault\n3. AWS Secrets Manager\n\nWhich method aligns best with Maersk security policies for different environments?",
+      "comments": [
+        {
+          "comment_id": "DISC-006-COM-01",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "For production, use Vault or AWS Secrets Manager. For dev/staging, env variables with .env file is acceptable but should not be committed to Git.",
+          "timestamp": "2025-08-25T13:20:00Z"
+        },
+        {
+          "comment_id": "DISC-006-COM-02",
+          "commented_by": {
+            "name": "Priya Sharma",
+            "role": "QA Engineer"
+          },
+          "comment": "Ensure automated tests use mock credentials to avoid exposing secrets.",
+          "timestamp": "2025-08-25T13:35:00Z"
+        }
+      ],
+      "status": "Open",
+      "resolved_at": null,
+      "tags": ["security", "credentials", "vault", "best-practices"]
+    },
+    {
+      "discussion_id": "DISC-007",
+      "title": "[Discussion] Logging and Monitoring Strategy",
+      "category": "Discussion",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-25T14:00:00Z"
+      },
+      "related_jira": null,
+      "related_pr": null,
+      "related_incident": null,
+      "content": "Hello team,\n\nWe need a logging and monitoring strategy for NAVO services:\n1. Which centralized logging system to use (ELK, Grafana Loki, or other)?\n2. How to implement alerting for ServiceNow incidents or API failures?\n3. Best practices for logging sensitive data?",
+      "comments": [
+        {
+          "comment_id": "DISC-007-COM-01",
+          "commented_by": {
+            "name": "Naveen Rao",
+            "role": "DevOps Engineer"
+          },
+          "comment": "Use Grafana Loki for logs aggregation. Alerting rules can be defined in Grafana or Prometheus. Mask sensitive fields before logging.",
+          "timestamp": "2025-08-25T14:20:00Z"
+        },
+        {
+          "comment_id": "DISC-007-COM-02",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "Agree. Also, logs should be linked with incident IDs for traceability across ServiceNow, Jira, and GitHub.",
+          "timestamp": "2025-08-25T14:35:00Z"
+        }
+      ],
+      "status": "Open",
+      "resolved_at": null,
+      "tags": ["logging", "monitoring", "grafana", "alerts"]
+    },
+    {
+      "discussion_id": "DISC-008",
+      "title": "[Q&A] Feature Flag Implementation for NAVO",
+      "category": "Q&A",
+      "started_by": {
+        "name": "Harshit Agrawal",
+        "role": "Developer",
+        "date": "2025-08-25T15:00:00Z"
+      },
+      "related_jira": null,
+      "related_pr": null,
+      "related_incident": null,
+      "content": "Team, I want to discuss implementing feature flags for NAVO:\n1. Should we use LaunchDarkly, Unleash, or a custom implementation?\n2. How to integrate with CI/CD for staged rollout?\n3. How to manage flags for tester, developer, and support roles?",
+      "comments": [
+        {
+          "comment_id": "DISC-008-COM-01",
+          "commented_by": {
+            "name": "Amit Verma",
+            "role": "Tech Lead"
+          },
+          "comment": "LaunchDarkly is preferred for enterprise-grade rollout. Flags can be role-based to control access for testers, developers, and support.",
+          "timestamp": "2025-08-25T15:20:00Z"
+        },
+        {
+          "comment_id": "DISC-008-COM-02",
+          "commented_by": {
+            "name": "Priya Sharma",
+            "role": "QA Engineer"
+          },
+          "comment": "Ensure QA has separate test flags to validate new features without affecting production users.",
+          "timestamp": "2025-08-25T15:35:00Z"
+        }
+      ],
+      "status": "Open",
+      "resolved_at": null,
+      "tags": ["feature-flags", "ci-cd", "staged-rollout", "roles"]
+    }
+  ]
+}
+
+]

@@ -1,0 +1,134 @@
+{
+  "team": "Team001",
+  "project": "Project001",
+  "jira_issues": [
+    {
+      "jira_id": "JIRA-1001",
+      "title": "Fix Flight Status API Outage",
+      "description": "ServiceNow INC-9101: Flight status API outage for 45 minutes due to expired SSL certificate. Update API gateway and renew SSL.",
+      "linked_incident": "INC-9101",
+      "linked_git_pr": "PR-101",
+      "linked_confluence_pages": ["Project Overview", "System Architecture"],
+      "priority": "High",
+      "criticalness": "Critical",
+      "status": "Done",
+      "created_at": "2025-07-20T11:05:00Z",
+      "resolved_at": "2025-07-20T11:45:00Z",
+      "days_to_resolve": 0.7,
+      "comments": [
+        {
+          "commented_by": "Alice Johnson",
+          "role": "Project Manager",
+          "comment": "Ensure API is verified post SSL renewal.",
+          "timestamp": "2025-07-20T11:10:00Z"
+        },
+        {
+          "commented_by": "Frank Wilson",
+          "role": "QA Engineer",
+          "comment": "All tests passed, API up and running.",
+          "timestamp": "2025-07-20T11:40:00Z"
+        }
+      ]
+    },
+    {
+      "jira_id": "JIRA-1002",
+      "title": "Cargo Overbooking Validation Fix",
+      "description": "ServiceNow INC-9102: Cargo overbooking issue due to validation bug. Update booking logic to prevent overbooking.",
+      "linked_incident": "INC-9102",
+      "linked_git_pr": "PR-102",
+      "linked_confluence_pages": ["System Architecture", "API Documentation"],
+      "priority": "Critical",
+      "criticalness": "High",
+      "status": "In Progress",
+      "created_at": "2025-07-22T09:05:00Z",
+      "resolved_at": null,
+      "days_open": 3,
+      "comments": [
+        {
+          "commented_by": "Grace Kim",
+          "role": "Support Engineer",
+          "comment": "Manual booking override in place until fix merged.",
+          "timestamp": "2025-07-22T09:50:00Z"
+        },
+        {
+          "commented_by": "Alice Johnson",
+          "role": "Project Manager",
+          "comment": "Prioritize fix for upcoming flights.",
+          "timestamp": "2025-07-22T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "jira_id": "JIRA-1003",
+      "title": "Flight Data Sync Cron Job Issue",
+      "description": "ServiceNow INC-9103: Flight schedules not syncing due to cron job failure. Add retry logic and monitoring.",
+      "linked_incident": "INC-9103",
+      "linked_git_pr": "PR-103",
+      "linked_confluence_pages": ["System Architecture", "API Documentation"],
+      "priority": "High",
+      "criticalness": "High",
+      "status": "Done",
+      "created_at": "2025-07-25T08:20:00Z",
+      "resolved_at": "2025-07-25T10:30:00Z",
+      "days_to_resolve": 0.9,
+      "comments": [
+        {
+          "commented_by": "Frank Wilson",
+          "role": "QA Engineer",
+          "comment": "Cron retry logic tested successfully.",
+          "timestamp": "2025-07-25T09:45:00Z"
+        }
+      ]
+    },
+    {
+      "jira_id": "JIRA-1004",
+      "title": "Cargo Weight Calculation Bug",
+      "description": "ServiceNow INC-9104: Rounding errors in cargo weight calculation for items >500kg. Update cargo_service.py logic.",
+      "linked_incident": "INC-9104",
+      "linked_git_pr": "PR-104",
+      "linked_confluence_pages": ["System Architecture", "Database Design"],
+      "priority": "Critical",
+      "criticalness": "Critical",
+      "status": "In Progress",
+      "created_at": "2025-07-28T14:25:00Z",
+      "resolved_at": null,
+      "days_open": 2,
+      "comments": [
+        {
+          "commented_by": "Grace Kim",
+          "role": "Support Engineer",
+          "comment": "Manual verification in place until PR merged.",
+          "timestamp": "2025-07-28T15:00:00Z"
+        },
+        {
+          "commented_by": "Eve Martinez",
+          "role": "Senior Developer",
+          "comment": "Fixing rounding logic, patch in development branch.",
+          "timestamp": "2025-07-28T15:10:00Z"
+        }
+      ]
+    },
+    {
+      "jira_id": "JIRA-1005",
+      "title": "Confluence Knowledge Base Update",
+      "description": "Update Confluence pages with latest project documentation. No code change required.",
+      "linked_incident": null,
+      "linked_git_pr": null,
+      "linked_confluence_pages": ["Project Overview", "System Architecture", "UI/UX Design", "API Documentation"],
+      "priority": "Medium",
+      "criticalness": "Low",
+      "status": "Done",
+      "created_at": "2025-07-19T10:00:00Z",
+      "resolved_at": "2025-07-19T15:00:00Z",
+      "days_to_resolve": 0.2,
+      "comments": [
+        {
+          "commented_by": "Alice Johnson",
+          "role": "Project Manager",
+          "comment": "Documentation updated for all teams.",
+          "timestamp": "2025-07-19T14:45:00Z"
+        }
+      ]
+    }
+  ]
+}

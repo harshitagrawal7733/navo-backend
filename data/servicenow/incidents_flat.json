@@ -1,0 +1,122 @@
+{
+  "incidents": [
+    {
+      "id": "INC-9101",
+      "title": "Flight Status API Outage",
+      "description": "Flight status API was unavailable for 45 minutes, affecting real-time cargo tracking.",
+      "status": "Resolved",
+      "importance": "High",
+      "created_at": "2025-07-20T11:00:00Z",
+      "resolved_at": "2025-07-20T11:45:00Z",
+      "created_by": {
+        "name": "Frank Wilson",
+        "role": "QA Engineer",
+        "email": "frank.wilson@airfreight.com"
+      },
+      "resolved_by": {
+        "name": "Eve Martinez",
+        "role": "Senior Developer",
+        "email": "eve.martinez@airfreight.com"
+      },
+      "root_cause": "Expired SSL certificate on upstream provider.",
+      "resolution": "Renewed certificate and restarted API gateway.",
+      "steps_followed": [
+        "Identified API failure from monitoring alerts.",
+        "Checked upstream provider certificate status.",
+        "Coordinated with DevOps to renew SSL certificate.",
+        "Restarted API gateway.",
+        "Verified real-time tracking resumed."
+      ],
+      "comment_history": [
+        {
+          "commented_by": "Grace Kim",
+          "role": "Support Engineer",
+          "comment": "Monitoring dashboards alerted downtime. Notified technical team.",
+          "timestamp": "2025-07-20T11:05:00Z"
+        },
+        {
+          "commented_by": "Eve Martinez",
+          "role": "Senior Developer",
+          "comment": "Confirmed SSL certificate expired. Initiating renewal.",
+          "timestamp": "2025-07-20T11:10:00Z"
+        },
+        {
+          "commented_by": "Alice Johnson",
+          "role": "Project Manager",
+          "comment": "Please prioritize resolution and notify stakeholders.",
+          "timestamp": "2025-07-20T11:15:00Z"
+        }
+      ],
+      "linked_resources": [
+        {
+          "type": "API Gateway",
+          "id": "AG-01",
+          "url": "http://dev.airfreight.local:8000/api-status"
+        },
+        {
+          "type": "Monitoring Dashboard",
+          "id": "GD-01",
+          "url": "http://grafana.airfreight.com/d/airfreight-dashboard"
+        }
+      ],
+      "team": "Team001",
+      "project": "Project001"
+    },
+    {
+      "id": "INC-9102",
+      "title": "Cargo Overbooking Incident",
+      "description": "System allowed booking of 120% cargo capacity on flight AF123. Manual intervention required.",
+      "status": "Open",
+      "importance": "Critical",
+      "created_at": "2025-07-22T09:00:00Z",
+      "resolved_at": null,
+      "created_by": {
+        "name": "Frank Wilson",
+        "role": "QA Engineer",
+        "email": "frank.wilson@airfreight.com"
+      },
+      "resolved_by": null,
+      "root_cause": "Validation bug in booking logic.",
+      "resolution": "",
+      "steps_followed": [
+        "QA identified overbooking during routine test.",
+        "Notified development and operations teams.",
+        "Applied temporary manual restriction to prevent further overbooking."
+      ],
+      "comment_history": [
+        {
+          "commented_by": "Eve Martinez",
+          "role": "Senior Developer",
+          "comment": "Working on fix for validation bug in booking logic.",
+          "timestamp": "2025-07-22T09:30:00Z"
+        },
+        {
+          "commented_by": "Grace Kim",
+          "role": "Support Engineer",
+          "comment": "Manual intervention applied. Cargo capacity temporarily blocked.",
+          "timestamp": "2025-07-22T09:45:00Z"
+        },
+        {
+          "commented_by": "Alice Johnson",
+          "role": "Project Manager",
+          "comment": "Urgent fix required before next flight schedule.",
+          "timestamp": "2025-07-22T10:00:00Z"
+        }
+      ],
+      "linked_resources": [
+        {
+          "type": "Booking System",
+          "id": "BS-01",
+          "url": "http://dev.airfreight.local:8000/api/bookings"
+        },
+        {
+          "type": "Jira Board",
+          "id": "JIRA-001",
+          "url": "https://airfreight.atlassian.net/jira/software/c/projects/AFP/boards/1"
+        }
+      ],
+      "team": "Team001",
+      "project": "Project001"
+    }
+  ]
+}

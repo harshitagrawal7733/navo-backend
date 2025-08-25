@@ -1,0 +1,222 @@
+[
+  {
+  "team": "Team001",
+  "project": "Project001",
+  "documentation": {
+    "project_overview": {
+      "description": "The AirFreight Cargo Platform is a comprehensive web-based application designed to streamline air cargo operations for airlines, freight forwarders, and customs authorities. The platform provides end-to-end management of cargo shipments.",
+      "features": [
+        "Shipment booking – allows freight forwarders to create and manage cargo bookings efficiently.",
+        "Real-time flight tracking – tracks flight status, delays, and cargo location in real time.",
+        "Cargo optimization – intelligent allocation of cargo space across flights to maximize utilization.",
+        "Integration with external systems – connects with airline APIs, airport operations systems, customs authorities, and regulatory agencies."
+      ],
+      "benefits": "The platform serves as a central hub for stakeholders, enabling faster decision-making, reducing operational errors, and improving cargo visibility across the supply chain."
+    },
+    "system_architecture": {
+      "description": "The platform is built on a modern, scalable architecture that supports high availability and real-time operations.",
+      "frontend": "React-based web application providing intuitive dashboards for cargo booking, flight tracking, and exception management.",
+      "backend": "Python FastAPI application handling business logic, API endpoints, and integrations with third-party systems.",
+      "database": "PostgreSQL relational database storing shipments, cargo items, flights, customers, event logs, and audit trails.",
+      "integrations": [
+        "IATA flight data for flight schedules and capacity planning.",
+        "Airport slot management systems for real-time gate and cargo allocation.",
+        "Customs clearance APIs for automated document submission and tracking."
+      ],
+      "middleware": "Message queues and caching layers ensure smooth asynchronous processing for high-volume operations.",
+      "deployment": "Dockerized microservices architecture with Kubernetes orchestration for scalability and resilience."
+    },
+    "api_documentation": {
+      "description": "The platform exposes a RESTful API layer for integration with internal and external systems.",
+      "endpoints": {
+        "/api/bookings": "POST/GET – create, update, and retrieve cargo bookings.",
+        "/api/flights": "GET – fetch flight schedules, statuses, and capacity information.",
+        "/api/cargo": "POST/GET – manage cargo items, including weight, dimensions, and handling requirements.",
+        "/api/alerts": "POST – send notifications for delays, exceptions, or cargo status changes."
+      },
+      "security": [
+        "All APIs use OAuth2 for authentication and authorization.",
+        "Integration with airline SSO systems ensures secure access for airline staff and operations teams."
+      ],
+      "error_handling": [
+        "Standardized error codes and messages for easy debugging.",
+        "Rate limits applied to prevent overload from third-party systems."
+      ]
+    },
+    "ui_ux_design": {
+      "description": "The user interface is designed for efficiency and usability across multiple stakeholders.",
+      "features": [
+        "Dashboards: Custom dashboards for freight forwarders, airline operations, and customs agents.",
+        "Real-time updates: Live flight tracking, cargo location, and alerts.",
+        "Booking flow: Step-by-step cargo booking with validation and optimization suggestions.",
+        "Exception management: Quick view and resolution of delays, missing documents, or handling issues.",
+        "Mobile responsive: Optimized for tablets and laptops used by airport and freight staff."
+      ]
+    },
+    "database_design": {
+      "description": "The platform uses PostgreSQL with carefully designed schemas to handle cargo operations efficiently.",
+      "tables": {
+        "shipments": "Contains booking details, status, origin/destination, and handling instructions.",
+        "cargo_items": "Weight, dimensions, hazardous material flags, and special handling instructions.",
+        "flights": "Flight schedules, cargo capacity, gate assignments, and airline details.",
+        "customers": "Freight forwarder, airline staff, and customs agent profiles.",
+        "event_logs": "Detailed activity logs for audit, compliance, and troubleshooting."
+      },
+      "database_management": [
+        "Schema migrations are managed with Liquibase for versioning.",
+        "ER diagrams are available in /docs/db/airfreight_er_diagram.png."
+      ]
+    },
+    "future_scope": {
+      "description": "The platform is designed for growth and scalability.",
+      "planned_features": [
+        "AI-based cargo space optimization – intelligent allocation of cargo to maximize space utilization.",
+        "Predictive delay alerts – machine learning models to anticipate flight delays and disruptions.",
+        "Automated customs document generation – generate and submit customs paperwork automatically.",
+        "Partner ecosystem – integrations with additional airlines, freight forwarders, and logistics providers.",
+        "Analytics dashboards – KPIs on cargo volume, flight utilization, and operational efficiency."
+      ]
+    }
+  }
+},
+{
+  "team": "Team001",
+  "project": "Project001",
+  "onboarding": {
+    "overview": "This onboarding guide provides instructions and access details for new team members joining the AirFreight Cargo Platform project. Access and instructions vary by role: Developer, Tester, Support.",
+    
+    "roles": {
+      "developer": {
+        "description": "Responsible for implementing features, fixing bugs, and integrating APIs.",
+        "access_needed": [
+          "Git repository: Read/Write",
+          "Dev and QA environment access",
+          "Docker and Kubernetes clusters",
+          "PostgreSQL dev database",
+          "API documentation access",
+          "Chroma vector DB for Confluence/Docs integration"
+        ],
+        "tools": ["VSCode", "Postman", "Docker Desktop", "Kubernetes CLI", "Python 3.11", "Node.js 20"]
+      },
+      "tester": {
+        "description": "Responsible for verifying functionality, writing test cases, and reporting issues.",
+        "access_needed": [
+          "QA environment access",
+          "Test Jira board: Read/Write",
+          "Test data in PostgreSQL and API endpoints",
+          "Bug reporting tools (Jira, ServiceNow)",
+          "Test automation frameworks"
+        ],
+        "tools": ["Postman", "Selenium/Playwright", "Jira", "TestRail"]
+      },
+      "support": {
+        "description": "Responsible for monitoring system, handling incidents, and communicating with business stakeholders.",
+        "access_needed": [
+          "Production environment monitoring dashboards",
+          "ServiceNow incident management",
+          "Read-only access to Jira boards",
+          "Email and notification systems"
+        ],
+        "tools": ["ServiceNow", "Grafana", "Slack", "Email"]
+      }
+    },
+    
+    "team_structure": {
+      "manager": {
+        "name": "Alice Johnson",
+        "email": "alice.johnson@airfreight.com",
+        "role": "Project Manager",
+        "responsibilities": [
+          "Oversee project timelines",
+          "Coordinate across business and technical teams",
+          "Approve major releases"
+        ]
+      },
+      "tech_lead": {
+        "name": "Bob Smith",
+        "email": "bob.smith@airfreight.com",
+        "role": "Technical Lead",
+        "responsibilities": [
+          "Architectural decisions",
+          "Code review",
+          "Guidance for developers"
+        ]
+      },
+      "business_team": [
+        {
+          "name": "Carol Davis",
+          "email": "carol.davis@airfreight.com",
+          "role": "Business Analyst"
+        },
+        {
+          "name": "David Lee",
+          "email": "david.lee@airfreight.com",
+          "role": "Product Owner"
+        }
+      ],
+      "technical_team": [
+        {
+          "name": "Eve Martinez",
+          "email": "eve.martinez@airfreight.com",
+          "role": "Senior Developer"
+        },
+        {
+          "name": "Frank Wilson",
+          "email": "frank.wilson@airfreight.com",
+          "role": "QA Engineer"
+        },
+        {
+          "name": "Grace Kim",
+          "email": "grace.kim@airfreight.com",
+          "role": "Support Engineer"
+        }
+      ]
+    },
+    
+    "project_resources": {
+      "jira_board": "https://airfreight.atlassian.net/jira/software/c/projects/AFP/boards/1",
+      "git_repo": "https://github.com/airfreight-cargo/airfreight-platform",
+      "confluence_docs": "https://airfreight.atlassian.net/wiki/spaces/AFP",
+      "slack_channel": "#airfreight-platform",
+      "email_distribution": "afp-team@airfreight.com",
+      "dev_env": "http://dev.airfreight.local:8000",
+      "qa_env": "http://qa.airfreight.local:8000",
+      "prod_monitoring": "http://grafana.airfreight.com/d/airfreight-dashboard"
+    },
+    
+    "poc_accounts": {
+      "developer": [
+        {
+          "username": "dev_poc01",
+          "password": "Dev@1234",
+          "email": "dev_poc01@airfreight.com"
+        }
+      ],
+      "tester": [
+        {
+          "username": "tester_poc01",
+          "password": "Test@1234",
+          "email": "tester_poc01@airfreight.com"
+        }
+      ],
+      "support": [
+        {
+          "username": "support_poc01",
+          "password": "Support@1234",
+          "email": "support_poc01@airfreight.com"
+        }
+      ]
+    },
+    
+    "getting_started": [
+      "Clone the Git repository to local machine.",
+      "Set up Python virtual environment and install dependencies.",
+      "Set up Node.js environment for frontend (React).",
+      "Run Docker containers for backend, database, and services.",
+      "Configure API keys and credentials for respective roles.",
+      "Verify access to Jira, Confluence, and monitoring dashboards.",
+      "Join Slack channel and mailing list."
+    ]
+  }
+}
+]

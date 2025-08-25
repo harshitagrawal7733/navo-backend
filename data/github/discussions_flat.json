@@ -1,0 +1,257 @@
+{
+  "discussions": [
+    {
+      "team": "Team001",
+      "project": "Project001",
+      "git_activity": [
+        {
+          "pr_id": "PR-101",
+          "title": "Fix Flight Status API SSL Expiry Issue",
+          "description": "Renew SSL certificate and update API gateway configs to prevent downtime.",
+          "created_by": {
+            "name": "Eve Martinez",
+            "role": "Senior Developer",
+            "email": "eve.martinez@airfreight.com"
+          },
+          "created_at": "2025-07-20T11:10:00Z",
+          "status": "Merged",
+          "merge_requested_by": "Alice Johnson",
+          "merged_at": "2025-07-20T11:45:00Z",
+          "linked_incident": "INC-9101",
+          "commits": [
+            {
+              "commit_id": "c9f1a2b",
+              "message": "Renew SSL certificate for upstream provider",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-20T11:12:00Z",
+              "files_changed": [
+                "config/api_gateway.yaml",
+                "scripts/ssl_renew.sh"
+              ]
+            },
+            {
+              "commit_id": "d4a2b1c",
+              "message": "Add API health check to prevent future SSL issues",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-20T11:30:00Z",
+              "files_changed": [
+                "monitoring/health_check.py"
+              ]
+            }
+          ],
+          "pr_comments": [
+            {
+              "commented_by": "Alice Johnson",
+              "role": "Project Manager",
+              "comment": "Please ensure certificate renewed before next flight schedule.",
+              "timestamp": "2025-07-20T11:15:00Z"
+            },
+            {
+              "commented_by": "Frank Wilson",
+              "role": "QA Engineer",
+              "comment": "Verified API response after renewal. All checks passed.",
+              "timestamp": "2025-07-20T11:40:00Z"
+            }
+          ]
+        },
+        {
+          "pr_id": "PR-102",
+          "title": "Fix Cargo Overbooking Validation Bug",
+          "description": "Update booking logic to prevent cargo overbooking for flights over 100%.",
+          "created_by": {
+            "name": "Eve Martinez",
+            "role": "Senior Developer",
+            "email": "eve.martinez@airfreight.com"
+          },
+          "created_at": "2025-07-22T09:30:00Z",
+          "status": "Open",
+          "merge_requested_by": "Alice Johnson",
+          "linked_incident": "INC-9102",
+          "commits": [
+            {
+              "commit_id": "f7d8c9a",
+              "message": "Add validation for max cargo capacity in booking API",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-22T09:35:00Z",
+              "files_changed": [
+                "services/booking_service.py",
+                "tests/test_booking_validation.py"
+              ]
+            }
+          ],
+          "pr_comments": [
+            {
+              "commented_by": "Grace Kim",
+              "role": "Support Engineer",
+              "comment": "Manual intervention in place until PR merged.",
+              "timestamp": "2025-07-22T09:45:00Z"
+            },
+            {
+              "commented_by": "Alice Johnson",
+              "role": "Project Manager",
+              "comment": "Please prioritize this fix. Critical issue for upcoming flights.",
+              "timestamp": "2025-07-22T10:00:00Z"
+            }
+          ]
+        },
+        {
+          "pr_id": "PR-103",
+          "title": "Add Cron Job Recovery for Flight Data Sync",
+          "description": "Fix cron job failure issue during server maintenance to ensure flight schedules sync.",
+          "created_by": {
+            "name": "Eve Martinez",
+            "role": "Senior Developer",
+            "email": "eve.martinez@airfreight.com"
+          },
+          "created_at": "2025-07-25T08:30:00Z",
+          "status": "Merged",
+          "merge_requested_by": "Alice Johnson",
+          "merged_at": "2025-07-25T10:30:00Z",
+          "linked_incident": "INC-9103",
+          "commits": [
+            {
+              "commit_id": "a1b2c3d",
+              "message": "Add retry logic to cron flight data sync",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-25T08:45:00Z",
+              "files_changed": [
+                "jobs/flight_sync.py"
+              ]
+            },
+            {
+              "commit_id": "e4f5g6h",
+              "message": "Add monitoring alert for cron failures",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-25T09:15:00Z",
+              "files_changed": [
+                "monitoring/alerts.py"
+              ]
+            }
+          ],
+          "pr_comments": [
+            {
+              "commented_by": "Frank Wilson",
+              "role": "QA Engineer",
+              "comment": "Tested cron retry locally, working fine.",
+              "timestamp": "2025-07-25T09:45:00Z"
+            }
+          ]
+        },
+        {
+          "pr_id": "PR-104",
+          "title": "Fix Cargo Weight Calculation Bug",
+          "description": "Correct rounding errors in cargo weight calculations for items over 500kg.",
+          "created_by": {
+            "name": "Eve Martinez",
+            "role": "Senior Developer",
+            "email": "eve.martinez@airfreight.com"
+          },
+          "created_at": "2025-07-28T14:30:00Z",
+          "status": "Open",
+          "merge_requested_by": "Alice Johnson",
+          "linked_incident": "INC-9104",
+          "commits": [
+            {
+              "commit_id": "h7i8j9k",
+              "message": "Fix rounding logic for cargo weight > 500kg",
+              "author": "Eve Martinez",
+              "timestamp": "2025-07-28T14:50:00Z",
+              "files_changed": [
+                "services/cargo_service.py",
+                "tests/test_cargo_weight.py"
+              ]
+            }
+          ],
+          "pr_comments": [
+            {
+              "commented_by": "Grace Kim",
+              "role": "Support Engineer",
+              "comment": "Manual weight verification in place until fix merged.",
+              "timestamp": "2025-07-28T15:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "repo": "airfreight-cargo-db",
+      "prs": [
+        {
+          "id": "PR-301",
+          "title": "Add Cargo Booking Table and API Endpoint",
+          "description": "Introduced cargo_booking table and /api/bookings endpoint for air freight bookings.",
+          "author": "Sophia",
+          "team": "Backend",
+          "created_at": "2025-07-12T10:00:00Z",
+          "files_changed": [
+            "api/bookings.py",
+            "models/cargo_booking.py",
+            "migrations/001_create_cargo_booking.sql"
+          ],
+          "labels": [
+            "feature",
+            "cargo",
+            "backend"
+          ]
+        },
+        {
+          "id": "PR-302",
+          "title": "Flight Tracking Integration with IATA API",
+          "description": "Integrated IATA flight status API for real-time flight tracking.",
+          "author": "Arjun",
+          "team": "Backend",
+          "created_at": "2025-07-18T14:30:00Z",
+          "files_changed": [
+            "services/flight_tracking.py",
+            "utils/iata_api.py"
+          ],
+          "labels": [
+            "integration",
+            "flights",
+            "tracking"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "api/bookings.py",
+          "content": "# API endpoint for cargo bookings\n..."
+        },
+        {
+          "path": "models/cargo_booking.py",
+          "content": "# CargoBooking model for air freight\n..."
+        },
+        {
+          "path": "migrations/001_create_cargo_booking.sql",
+          "content": "-- SQL migration for cargo_booking table\n..."
+        },
+        {
+          "path": "services/flight_tracking.py",
+          "content": "# Service for integrating with IATA flight status API\n..."
+        },
+        {
+          "path": "utils/iata_api.py",
+          "content": "# Utility for calling IATA flight status API\n..."
+        }
+      ],
+      "discussions": [
+        {
+          "id": "DISC-301",
+          "title": "Should we support multi-leg cargo bookings?",
+          "author": "Priya",
+          "created_at": "2025-07-10T09:00:00Z",
+          "comments": [
+            {
+              "author": "Sophia",
+              "text": "Multi-leg support is needed for transshipment routes."
+            },
+            {
+              "author": "Arjun",
+              "text": "Let's add this as a future scope after MVP."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
